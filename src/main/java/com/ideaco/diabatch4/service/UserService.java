@@ -1,5 +1,6 @@
 package com.ideaco.diabatch4.service;
 
+import com.ideaco.diabatch4.dto.UserDTO;
 import com.ideaco.diabatch4.model.UserModel;
 import com.ideaco.diabatch4.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,5 +75,26 @@ public class UserService {
 
         userRepository.deleteById(userId);
         return true;
+    }
+
+    public UserDTO dataWithDTO(int userId) {
+        Optional<UserModel> userModelOptional = userRepository.findById(userId);
+
+        if (userModelOptional.isEmpty()) {
+            return null;
+        }
+
+        return convertDTO(userModelOptional.get());
+    }
+
+    private UserDTO convertDTO(UserModel item) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserName(item.getUserName());
+        userDTO.setUserEmail(item.getUserEmail());
+        userDTO.setUserPhone(item.getUserPhone());
+        userDTO.setUserAddress(item.getUserAddress());
+        userDTO.setUserResume(item.getUserResume());
+
+        return userDTO;
     }
 }

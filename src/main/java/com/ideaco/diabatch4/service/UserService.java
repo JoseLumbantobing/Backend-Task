@@ -55,4 +55,24 @@ public class UserService {
 
         return userRepository.save(userModel);
     }
+
+    public UserModel updateUserWithParams(int userId, String userName) {
+        Optional<UserModel> userModelOptional = userRepository.findById(userId);
+
+        UserModel userModel = userModelOptional.get();
+        userModel.setUserName(userName);
+
+        return userRepository.save(userModel);
+    }
+
+    public boolean deleteUser(int userId) {
+        Optional<UserModel> userModelOptional = userRepository.findById(userId);
+
+        if(userModelOptional.isEmpty()) {
+            return false;
+        }
+
+        userRepository.deleteById(userId);
+        return true;
+    }
 }

@@ -51,4 +51,21 @@ public class UserController {
     public UserModel updateUserWithBody(@RequestBody UserModel userModel) {
         return userService.updateUserWithBody(userModel);
     }
+
+    @PatchMapping("/updateUserWithPatch")
+    public UserModel updateUserWithParams(@RequestParam("userId") int userId,
+                                          @RequestParam("userName") String userName) {
+        return userService.updateUserWithParams(userId, userName);
+    }
+
+    @DeleteMapping("/deleteUser")
+    public String deleteUser(@RequestParam("userId") int userId) {
+        boolean response = userService.deleteUser(userId);
+
+        if(response) {
+            return "Delete Success";
+        } else {
+            return "Delete Failed";
+        }
+    }
 }
